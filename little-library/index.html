@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Little Library at the End of the Road</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F3EBDF;--cream:#FBF7F0;--sand:#E6DCCB;--ink:#1B1714;--accent:#6B4F3A;--muted:#8A7F72;--desk:#D9CCB8;
+  --mono:"Courier Prime",Courier,"Courier New",monospace;--serif:"Libre Baskerville",Georgia,serif}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--desk);color:var(--ink)}
+body{font-family:var(--serif);display:flex;flex-direction:column;align-items:center;padding:20px 14px 40px;
+  background-image:radial-gradient(rgba(27,23,20,.05) 1px,transparent 1px);background-size:6px 6px}
+button{font:inherit;color:inherit;cursor:pointer}
+.bar{width:100%;max-width:560px;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;
+  font-family:var(--mono);font-size:13px;letter-spacing:.06em}
+.bar .home{background:none;border:0;padding:4px 0;text-transform:uppercase;font-weight:700}
+.bar .home:hover{color:var(--accent)}
+.found{display:flex;align-items:center;gap:8px;background:none;border:0;padding:4px 0;text-transform:uppercase}
+.cups{display:flex;gap:4px}
+.cup{width:16px;height:18px;border:2px solid var(--ink);border-top-width:3px;border-radius:0 0 4px 4px;background:transparent}
+.cup.on{background:var(--accent)}
+.book{width:100%;max-width:560px;perspective:1600px}
+.page{position:relative;background:var(--paper);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);
+  min-height:min(780px,calc(100vh - 110px));padding:36px 40px 26px;display:flex;flex-direction:column;transform-origin:left center}
+.page::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background:repeating-linear-gradient(0deg,transparent 0 27px,rgba(138,127,114,.12) 27px 28px)}
+.page.turn{animation:turn .45s cubic-bezier(.3,.7,.3,1)}
+@keyframes turn{from{transform:rotateY(-14deg) translateX(10px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.page.turn{animation:none}}
+.kicker{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{margin:6px 0 16px;font-family:var(--mono);font-weight:400;font-size:26px;line-height:1.15;text-transform:uppercase;text-wrap:balance}
+.story p{margin:0 0 11px;font-size:15.5px;line-height:1.6}
+.story p.i{font-style:italic;color:var(--accent)}
+.story p.sign{display:inline-block;border:2px dashed var(--ink);padding:8px 14px;font-family:var(--mono);font-weight:700;letter-spacing:.06em;font-size:15px;margin:2px 0 14px}
+.story p.caps{font-family:var(--mono);font-weight:700;letter-spacing:.1em;font-size:15.5px;margin-top:4px}
+.art{display:flex;justify-content:center;align-items:flex-end;gap:18px;margin:10px 0 14px;flex-wrap:wrap}
+.art svg{display:block;height:auto;max-width:100%}
+.art.one svg{width:min(330px,100%)}
+.art.two svg:first-child{width:min(210px,52%)}
+.art.two svg:last-child{width:min(165px,40%)}
+.art svg{opacity:0;transform:translateY(6px) rotate(-1deg);transition:opacity .5s .15s,transform .5s .15s}
+.art.in svg{opacity:1;transform:none}
+.choices{margin-top:auto;border-top:2px solid var(--ink);padding-top:4px}
+.choice{display:flex;width:100%;justify-content:space-between;align-items:center;gap:14px;text-align:left;
+  background:none;border:0;border-bottom:1px dashed var(--muted);padding:13px 4px;font-size:15.5px;transition:background .15s}
+.choice .go{flex:none;font-family:var(--mono);font-weight:700;color:var(--accent);font-size:14.5px;transition:transform .15s}
+.choice:hover,.choice:focus-visible{background:var(--sand);outline:none}
+.choice:hover .go,.choice:focus-visible .go{transform:translateX(4px)}
+.choice kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--muted);border-radius:3px;padding:0 4px;margin-right:8px;color:var(--muted)}
+.end{margin-top:auto;border-top:2px solid var(--ink);padding-top:12px}
+.end .big{margin:0;font-family:var(--mono);font-size:24px;font-weight:700;color:var(--accent)}
+.end .unlock{margin:4px 0 12px;font-family:var(--mono);font-size:13px;letter-spacing:.05em}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:2px solid var(--ink);background:var(--sand);padding:10px 14px;font-family:var(--mono);font-weight:700;font-size:14px;box-shadow:3px 3px 0 var(--ink);transition:transform .1s,box-shadow .1s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.ghost{background:var(--cream)}
+.folio{margin-top:18px;padding-top:6px;border-top:2px dashed var(--accent);display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+.folio b{font-size:16px}
+.folio button{background:none;border:0;padding:0;font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+.folio button:hover{color:var(--accent)}
+/* cover */
+.cover h1{font-size:clamp(30px,7vw,40px);margin:18px 0 0}
+.cover .art.one svg{width:min(340px,100%)}
+.cover .tagline{font-style:italic;font-size:17px;line-height:1.5;margin:12px 0 0}
+.cover .hint{font-style:italic;font-size:14px;margin:12px 0 0}
+.press{margin-top:22px;padding-top:12px;border-top:3px dashed var(--accent);font-family:var(--mono);font-size:12px;line-height:1.5}
+.press b{font-size:14px}
+/* endings */
+.list{margin:6px 0 0;padding:0;list-style:none}
+.list li{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px dashed var(--muted)}
+.list .num{font-family:var(--mono);font-weight:700;color:var(--accent);width:56px;flex:none}
+.list .t{flex:1}
+.list .t small{display:block;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+.list li.locked .t{color:var(--muted)}
+.list button{background:none;border:0;font-family:var(--mono);font-weight:700;color:var(--accent);padding:4px}
+.colophon{margin-top:auto;padding-top:12px;border-top:1px dashed var(--muted);font-family:var(--mono);font-size:12px;line-height:1.6}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,120px);background:var(--ink);color:var(--cream);font-family:var(--mono);
+  font-size:13px;padding:10px 16px;border-radius:2px;transition:transform .35s cubic-bezier(.3,.7,.3,1);z-index:9}
+.toast.show{transform:translate(-50%,0)}
+@media (max-width:480px){.page{padding:26px 22px 20px;box-shadow:4px 4px 0 var(--ink)}h1{font-size:22px}.story p{font-size:15px}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <button class="home" id="home" aria-label="Back to the cover">📚 The Little Library</button>
+  <button class="found" id="found" aria-label="Endings found"><span id="foundTxt">Endings 0/2</span><span class="cups" id="cups"></span></button>
+</div>
+<main class="book"><article class="page" id="page" aria-live="polite"></article></main>
+<div class="toast" id="toast" role="status"></div>
+
+<template id="coverArt"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300" role="img" aria-label="A little free library box painted dark blue, with a crooked roof, a brass handle and three books inside"><path d="M112.6 174.3 L133.3 174.1 L134.1 290.7 L111.1 291.0 Z" fill="#E6DCCB" stroke="none"></path><path d="M52.1 94.9 L192.1 90.2 L194.8 179.7 L50.2 180.4 Z" fill="#3B4F6B" stroke="none" opacity="0.92"></path><path d="M70.3 104.9 L170.2 101.8 L172.0 163.1 L70.7 165.6 Z" fill="#FBF7F0" stroke="none"></path><path d="M79.3 113.2 L95.6 113.6 L95.4 162.2 L80.3 161.7 Z" style="fill:var(--accent)" stroke="none" opacity="0.85"></path><path d="M100.1 119.1 L113.1 118.4 L114.4 161.9 L99.6 162.2 Z" fill="#BDB6AD" stroke="none"></path><path d="M117.9 109.6 L136.6 111.4 L135.5 162.1 L118.1 162.8 Z" fill="#E6DCCB" stroke="none"></path><path d="M39.5 100.6 L128.0 38.2 L208.8 89.5 Z" style="fill:var(--accent)" stroke="none" opacity="0.6"></path><path d="M166.3 137.6 C166.0 138.3 165.3 138.9 164.9 139.4 C164.5 140.0 164.2 140.7 164.0 140.9 C163.7 141.2 163.7 140.7 163.4 141.0 C163.1 141.3 162.6 142.7 162.0 142.8 C161.4 142.8 160.2 141.5 159.7 141.2 C159.1 140.9 159.1 141.1 158.6 140.8 C158.0 140.5 156.9 140.0 156.4 139.5 C155.9 139.1 155.5 138.6 155.4 138.1 C155.3 137.6 155.4 137.2 155.6 136.6 C155.9 136.1 156.6 135.4 156.8 134.9 C157.1 134.3 156.9 133.7 157.2 133.1 C157.4 132.6 157.8 132.0 158.2 131.7 C158.6 131.4 158.9 131.0 159.6 131.1 C160.3 131.2 161.8 131.9 162.3 132.2 C162.9 132.4 162.3 132.5 162.9 132.6 C163.4 132.8 165.1 132.6 165.7 133.0 C166.3 133.4 166.2 134.4 166.3 135.2 C166.4 135.9 166.5 136.9 166.3 137.6 Z" fill="#C9A35A" stroke="none"></path><path d="M109.5 178.0 Q119.4 178.6 129.3 178.2 M130.3 179.4 Q129.9 234.0 130.3 288.7 M131.1 287.9 Q120.3 288.4 109.5 288.7 M109.6 286.4 Q112.5 232.5 110.7 178.5 " fill="none" stroke="#1B1714" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M110.5 177.7 Q120.2 177.1 129.8 178.2 M129.9 176.8 Q128.5 231.6 129.6 286.4 M130.4 287.6 Q119.7 288.9 108.8 288.6 M108.8 288.2 Q111.8 233.7 111.4 179.2 " fill="none" stroke="#1B1714" stroke-width="1.21" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M49.1 91.7 Q119.3 93.0 189.4 89.5 M188.9 87.0 Q190.1 131.1 191.2 175.2 M192.4 175.1 Q119.2 177.1 46.0 177.7 M48.2 179.4 Q49.9 135.7 50.6 92.0 " fill="none" stroke="#1B1714" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M50.7 90.2 Q121.2 91.6 191.6 89.1 M190.9 87.7 Q190.8 131.2 191.7 174.8 M190.2 174.3 Q118.6 176.3 46.8 176.6 M46.6 176.5 Q47.2 133.6 48.9 90.8 " fill="none" stroke="#1B1714" stroke-width="1.21" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M34.3 99.3 Q78.7 66.1 124.4 34.7 M123.5 35.6 Q163.0 63.1 204.8 87.2 M205.9 85.9 Q120.2 92.0 34.3 96.4 " fill="none" stroke="#1B1714" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M35.2 99.2 Q80.2 68.4 122.8 34.3 M124.1 34.8 Q165.1 59.7 206.1 84.4 M207.9 87.5 Q122.4 92.9 36.8 97.0 " fill="none" stroke="#1B1714" stroke-width="1.21" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M68.9 104.9 Q119.5 103.2 170.1 102.9 M169.3 102.8 Q169.8 133.9 172.2 164.9 M172.1 164.8 Q120.6 166.1 69.1 166.1 M68.8 164.8 Q69.8 134.1 69.5 103.4 " fill="none" stroke="#1B1714" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M71.6 103.8 Q121.5 105.7 171.5 103.7 M169.7 101.3 Q170.9 132.3 170.3 163.2 M171.4 165.4 Q121.3 165.0 71.2 165.9 M70.7 165.0 Q71.5 135.0 70.4 105.0 " fill="none" stroke="#1B1714" stroke-width="1.21" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M80.3 114.0 Q87.9 113.4 95.6 113.4 M96.7 114.0 Q95.0 137.9 95.8 161.8 M96.3 161.5 Q87.9 160.8 79.5 161.5 M80.7 161.2 Q81.1 138.1 80.7 115.0 " fill="none" stroke="#1B1714" stroke-width="1.60" stroke-linecap="round" stroke-linejoin="round"></path><path d="M79.8 114.1 Q87.7 114.0 95.5 112.3 M96.3 113.1 Q95.6 137.5 96.9 161.9 M96.5 161.6 Q88.1 162.1 79.7 161.7 M80.2 161.5 Q81.2 137.3 79.8 113.2 " fill="none" stroke="#1B1714" stroke-width="0.88" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M99.8 119.9 Q107.0 119.6 114.1 119.5 M114.8 119.0 Q115.7 140.5 114.1 162.0 M113.9 161.6 Q106.7 162.6 99.3 162.4 M99.9 162.5 Q100.1 141.1 100.1 119.7 " fill="none" stroke="#1B1714" stroke-width="1.60" stroke-linecap="round" stroke-linejoin="round"></path><path d="M100.1 120.4 Q106.7 119.3 113.5 119.1 M113.5 119.6 Q113.1 140.8 114.0 162.1 M114.6 161.9 Q107.4 161.9 100.2 162.0 M100.4 161.9 Q101.4 140.9 100.1 120.0 " fill="none" stroke="#1B1714" stroke-width="0.88" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M118.3 110.5 Q127.5 110.7 136.6 110.7 M137.0 111.8 Q136.3 136.5 135.2 161.2 M135.4 161.6 Q126.4 161.4 117.4 162.2 M118.9 161.2 Q117.7 135.8 118.5 110.4 " fill="none" stroke="#1B1714" stroke-width="1.60" stroke-linecap="round" stroke-linejoin="round"></path><path d="M118.5 110.7 Q127.1 111.0 135.6 111.6 M136.0 112.1 Q136.5 136.7 136.7 161.2 M136.0 161.8 Q126.8 161.3 117.6 161.7 M116.9 162.1 Q116.9 135.5 117.9 108.9 " fill="none" stroke="#1B1714" stroke-width="0.88" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M122.3 124.0 C122.7 124.9 123.6 129.0 125.0 129.2 C126.4 129.3 129.5 125.1 130.7 125.1 C131.9 125.2 131.8 128.7 132.1 129.4 " fill="none" style="stroke:var(--accent)" stroke-width="1.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M120.9 124.7 C121.7 125.1 124.0 127.1 125.4 127.1 C126.9 127.2 128.4 124.6 129.8 125.0 C131.2 125.4 133.1 128.7 133.8 129.4 " fill="none" style="stroke:var(--accent)" stroke-width="0.66" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M70.8 163.4 Q119.5 160.7 168.2 161.7 " fill="none" stroke="#1B1714" stroke-width="1.60" stroke-linecap="round" stroke-linejoin="round"></path><path d="M70.5 162.6 Q119.2 163.0 167.8 159.6 " fill="none" stroke="#1B1714" stroke-width="0.88" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M165.0 136.8 C164.8 137.4 164.5 137.3 164.4 137.9 C164.2 138.6 164.5 140.1 164.0 140.7 C163.5 141.3 162.1 141.3 161.5 141.4 C161.0 141.5 161.1 141.5 160.5 141.3 C159.9 141.1 158.7 140.7 157.9 140.3 C157.0 139.8 156.0 138.9 155.4 138.6 C154.8 138.4 154.5 139.1 154.4 138.5 C154.2 137.9 154.4 135.8 154.4 135.2 C154.4 134.6 153.9 135.3 154.4 134.9 C154.9 134.5 156.8 133.6 157.4 132.9 C157.9 132.2 157.2 131.1 157.6 130.8 C157.9 130.4 158.9 130.8 159.5 130.9 C160.1 131.0 160.5 130.8 161.1 131.3 C161.7 131.7 162.2 133.1 163.0 133.6 C163.7 134.1 165.4 133.7 165.8 134.2 C166.1 134.7 165.2 136.2 165.0 136.8 Z" fill="none" stroke="#1B1714" stroke-width="1.60" stroke-linecap="round" stroke-linejoin="round"></path><path d="M164.4 137.1 C164.5 137.6 164.5 137.2 164.2 137.6 C163.8 137.9 162.7 138.7 162.3 139.3 C162.0 139.8 162.4 140.3 161.9 140.6 C161.3 140.9 160.1 141.1 159.3 141.0 C158.5 140.9 157.5 140.3 156.9 140.1 C156.3 139.8 155.9 139.8 155.5 139.3 C155.0 138.7 154.4 137.4 154.3 136.8 C154.1 136.1 154.3 135.8 154.5 135.4 C154.7 134.9 155.2 134.6 155.6 134.2 C156.0 133.7 156.6 133.2 157.1 132.8 C157.6 132.5 158.2 132.7 158.6 132.3 C159.0 131.9 159.0 130.9 159.7 130.6 C160.5 130.3 162.4 130.2 163.1 130.5 C163.8 130.9 164.0 132.1 164.1 132.8 C164.1 133.5 163.5 134.2 163.5 134.9 C163.6 135.6 164.3 136.7 164.4 137.1 Z" fill="none" stroke="#1B1714" stroke-width="0.88" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M31.6 290.5 Q123.2 288.0 214.9 289.2 " fill="none" stroke="#1B1714" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"></path><path d="M30.1 290.0 Q122.7 291.3 215.3 289.2 " fill="none" stroke="#1B1714" stroke-width="1.10" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M83.1 290.5 Q84.5 284.8 86.8 279.4 M86.0 278.7 Q87.0 284.3 89.1 289.5 M89.4 290.2 Q91.2 283.5 93.1 276.7 M92.2 276.9 Q94.0 283.5 95.9 290.0 M95.8 289.5 Q97.5 284.8 100.4 280.7 M99.8 281.3 Q99.9 285.9 101.5 290.3 " fill="none" stroke="#1B1714" stroke-width="1.80" stroke-linecap="round" stroke-linejoin="round"></path><path d="M83.0 289.9 Q85.2 284.8 86.6 279.4 M86.7 279.4 Q88.1 284.4 88.8 289.6 M89.6 289.7 Q90.5 282.6 93.0 275.8 M92.6 276.7 Q94.6 283.4 95.9 290.2 M95.6 290.0 Q98.4 285.5 100.1 280.5 M99.7 281.6 Q101.1 285.5 102.4 289.4 " fill="none" stroke="#1B1714" stroke-width="0.99" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M142.4 289.6 Q143.3 284.2 145.1 279.1 M145.8 279.0 Q146.7 283.8 147.7 288.6 M148.2 288.5 Q150.3 282.9 151.2 277.0 M151.1 276.7 Q153.2 282.6 153.7 289.0 M152.6 289.0 Q154.3 284.6 157.1 280.8 M157.0 280.8 Q157.7 284.7 159.2 288.4 " fill="none" stroke="#1B1714" stroke-width="1.80" stroke-linecap="round" stroke-linejoin="round"></path><path d="M142.4 288.5 Q144.6 284.3 145.7 279.7 M144.9 279.2 Q146.1 284.5 147.5 289.6 M147.4 288.9 Q148.3 282.5 150.5 276.4 M151.2 276.7 Q152.9 282.6 153.8 288.7 M153.2 288.6 Q155.6 285.3 157.0 281.6 M157.6 281.2 Q158.4 285.4 159.3 289.5 " fill="none" stroke="#1B1714" stroke-width="0.99" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path></svg></template>
+<template id="bookArt"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 130" role="img" aria-label="An open book with a ribbon bookmark"><path d="M117.0 32.2 L26.8 23.4 L18.3 106.2 L117.5 115.5 Z" fill="#FBF7F0" stroke="none"></path><path d="M117.3 33.5 L209.3 22.3 L217.1 106.9 L117.8 116.0 Z" fill="#FBF7F0" stroke="none"></path><path d="M113.8 30.5 L121.6 30.8 L126.2 125.8 L120.6 119.5 L114.2 128.7 Z" style="fill:var(--accent)" stroke="none" opacity="0.85"></path><path d="M113.7 28.5 Q69.4 25.3 25.4 19.7 M23.5 19.6 Q21.5 61.4 17.4 103.1 M16.3 104.2 Q66.5 108.0 116.5 113.1 M114.1 113.0 Q116.2 70.8 116.5 28.6 " fill="none" stroke="#1B1714" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M116.2 30.5 Q69.7 24.7 23.1 20.9 M23.1 20.4 Q19.7 61.6 15.2 102.6 M15.4 103.6 Q65.3 110.4 115.5 113.1 M116.4 113.5 Q114.9 71.5 115.9 29.4 " fill="none" stroke="#1B1714" stroke-width="1.21" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M115.4 30.1 Q160.8 23.2 206.6 18.7 M207.3 20.3 Q211.3 61.5 214.6 102.8 M215.4 104.5 Q166.0 107.9 116.7 111.0 M115.9 111.8 Q114.4 71.0 115.9 30.2 " fill="none" stroke="#1B1714" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M113.7 31.5 Q159.2 24.6 204.8 19.0 M206.6 21.1 Q209.2 62.6 213.9 104.0 M213.2 103.6 Q164.5 110.0 115.4 112.5 M113.8 110.9 Q116.5 70.8 115.7 30.6 " fill="none" stroke="#1B1714" stroke-width="1.21" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M34.7 37.4 Q67.8 40.8 100.7 45.3 " fill="none" stroke="#1B1714" stroke-width="1.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M32.7 37.7 Q66.2 38.9 99.4 43.2 " fill="none" stroke="#1B1714" stroke-width="0.66" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M129.0 44.9 Q161.8 40.6 194.8 38.3 " fill="none" stroke="#1B1714" stroke-width="1.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M129.2 44.8 Q162.3 40.9 195.5 37.2 " fill="none" stroke="#1B1714" stroke-width="0.66" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M34.5 51.1 Q67.7 53.5 100.9 55.7 " fill="none" stroke="#1B1714" stroke-width="1.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M34.6 50.9 Q67.7 52.2 100.6 55.9 " fill="none" stroke="#1B1714" stroke-width="0.66" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M129.0 56.7 Q162.9 55.1 196.6 52.1 " fill="none" stroke="#1B1714" stroke-width="1.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M130.2 55.1 Q163.5 52.3 196.9 50.0 " fill="none" stroke="#1B1714" stroke-width="0.66" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M33.1 63.7 Q66.2 66.5 99.5 67.8 " fill="none" stroke="#1B1714" stroke-width="1.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M34.1 63.3 Q67.3 67.1 100.7 68.6 " fill="none" stroke="#1B1714" stroke-width="0.66" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M128.8 68.3 Q162.8 64.8 197.0 63.4 " fill="none" stroke="#1B1714" stroke-width="1.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M130.8 67.6 Q163.3 65.9 195.7 64.8 " fill="none" stroke="#1B1714" stroke-width="0.66" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M33.2 76.3 Q66.4 77.9 99.6 80.5 " fill="none" stroke="#1B1714" stroke-width="1.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M34.7 75.9 Q67.0 78.0 99.4 80.3 " fill="none" stroke="#1B1714" stroke-width="0.66" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M130.0 81.1 Q162.6 77.1 195.4 76.2 " fill="none" stroke="#1B1714" stroke-width="1.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M130.0 79.5 Q162.8 75.9 195.9 75.7 " fill="none" stroke="#1B1714" stroke-width="0.66" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M114.0 29.8 Q117.8 29.5 121.5 30.1 M121.6 30.1 Q124.4 78.4 127.5 126.6 M126.4 125.8 Q123.2 122.9 119.9 120.2 M119.7 119.9 Q116.8 123.6 114.4 127.7 M112.5 129.5 Q115.7 79.5 114.6 29.4 " fill="none" stroke="#1B1714" stroke-width="1.60" stroke-linecap="round" stroke-linejoin="round"></path><path d="M114.4 29.5 Q118.0 30.4 121.7 30.0 M120.8 28.5 Q123.5 76.5 125.4 124.5 M126.0 125.9 Q123.2 122.3 119.6 119.4 M119.9 120.0 Q116.4 123.7 114.0 128.2 M115.1 128.8 Q112.5 78.9 113.5 28.9 " fill="none" stroke="#1B1714" stroke-width="0.88" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M204.5 9.4 Q210.3 9.7 216.1 10.5 " fill="none" style="stroke:var(--accent)" stroke-width="1.80" stroke-linecap="round" stroke-linejoin="round"></path><path d="M203.9 9.9 Q210.2 10.7 216.6 10.2 " fill="none" style="stroke:var(--accent)" stroke-width="0.99" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M209.4 4.3 Q209.2 10.1 209.9 15.9 " fill="none" style="stroke:var(--accent)" stroke-width="1.80" stroke-linecap="round" stroke-linejoin="round"></path><path d="M210.3 4.5 Q210.4 10.5 210.3 16.5 " fill="none" style="stroke:var(--accent)" stroke-width="0.99" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path><path d="M206.8 7.0 Q209.9 10.0 213.2 12.9 " fill="none" style="stroke:var(--accent)" stroke-width="1.20" stroke-linecap="round" stroke-linejoin="round"></path><path d="M207.2 7.2 Q210.3 9.9 212.8 13.2 " fill="none" style="stroke:var(--accent)" stroke-width="0.66" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"></path></svg></template>
+<script>
+const PAGES = {"2": {"title": "A New Arrival", "body": [["p", "You’ve walked this street hundreds of times. So you’re fairly certain the little library wasn’t there yesterday. It’s painted dark blue, with a crooked roof and a tiny brass handle. Inside are three books."], ["p", "The first is titled:"], ["sign", "TOMORROW, MORE OR LESS."], ["p", "The second:"], ["sign", "THINGS YOU HAVE FORGOTTEN."], ["p", "The third has your name on the cover. Not printed. Handwritten. In ink that hasn’t quite dried."], ["p", "Which book do you choose?"]], "art": [], "choices": [["The book about tomorrow?", 3], ["The book about forgotten things?", 4], ["The book with your name?", 5]]}, "3": {"title": "Tomorrow, More or Less", "body": [["p", "The book contains tomorrow’s date. It describes your morning in extraordinary detail. You will spill coffee. You will misplace your keys. At 8:14, someone wearing a yellow coat will ask you for directions. You will tell them the wrong way. You will spend the rest of the day wondering why."], ["p", "You turn the page. There are two versions of the following day. In one, you apologize. In the other, you don’t. The book offers no explanation. Just two different stories."]], "art": [], "choices": [["Return the book?", 6], ["Take it home?", 7]]}, "4": {"title": "Things You Have Forgotten", "body": [["p", "The first page smells faintly of rain. There’s a photograph of a house you recognize, though you can’t remember where it stood. On the next page is a recipe written in someone else’s handwriting."], ["p", "Then a list:"], ["p", "The name of your first stuffed animal."], ["p", "The sound of your childhood kitchen."], ["p", "The last thing someone said before you stopped speaking to them."], ["p", "Some memories make you smile. Others make you close the book for a moment."], ["p", "Near the end, you find a photograph of yourself. You’re laughing. You can’t remember why."]], "art": ["<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 170 190\" role=\"img\" aria-label=\"A photograph of you, laughing\"><path d=\"M20.3 29.1 L139.2 18.0 L155.7 166.7 L36.3 178.6 Z\" fill=\"#FBF7F0\" stroke=\"none\"></path><path d=\"M28.9 35.7 L128.5 25.5 L139.3 126.4 L38.5 136.3 Z\" fill=\"#E6DCCB\" stroke=\"none\"></path><path d=\"M18.4 25.4 Q77.7 17.8 137.4 14.6 M138.0 12.3 Q147.5 88.3 154.0 164.7 M153.4 164.2 Q92.7 172.3 31.7 176.5 M34.8 176.6 Q26.2 100.9 19.4 24.9 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"2.20\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M18.0 27.1 Q76.9 23.1 135.6 15.6 M136.0 12.7 Q143.8 87.9 153.2 162.9 M152.5 162.9 Q91.9 168.9 31.3 174.4 M34.1 175.6 Q28.2 101.0 18.5 26.8 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"1.21\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.55\"></path><path d=\"M29.0 35.0 Q77.6 27.3 126.7 23.7 M129.2 26.4 Q133.6 75.9 139.5 125.2 M137.3 127.9 Q88.5 132.4 39.7 137.9 M38.9 138.2 Q34.2 86.5 30.1 34.7 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"1.60\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M29.3 36.2 Q78.7 32.6 127.6 25.0 M127.2 24.1 Q131.4 75.2 139.2 125.8 M138.0 128.0 Q88.3 132.1 38.7 138.3 M39.9 136.0 Q32.2 85.2 27.3 34.0 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"0.88\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.55\"></path><path d=\"M108.4 81.0 C108.2 84.1 106.9 88.9 105.5 92.1 C104.2 95.3 102.3 97.6 100.1 100.0 C98.0 102.4 95.4 104.9 92.5 106.4 C89.7 108.0 86.0 109.2 83.1 109.2 C80.2 109.2 77.7 108.0 75.1 106.5 C72.4 105.1 69.2 102.7 67.2 100.4 C65.1 98.1 64.0 96.1 63.0 92.9 C61.9 89.6 60.9 84.2 60.8 80.9 C60.6 77.6 60.9 76.0 62.0 73.1 C63.1 70.2 65.2 66.3 67.4 63.6 C69.6 61.0 72.3 58.4 75.2 57.2 C78.0 56.0 81.7 56.5 84.5 56.7 C87.4 56.8 89.4 56.9 92.2 58.0 C94.9 59.1 98.8 60.8 101.2 63.3 C103.6 65.8 105.4 70.1 106.6 73.1 C107.8 76.0 108.6 77.8 108.4 81.0 Z\" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"2.00\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M109.0 81.5 C108.9 85.1 106.6 89.5 105.3 92.8 C104.0 96.1 103.1 99.1 101.2 101.2 C99.4 103.3 96.9 104.4 94.1 105.5 C91.2 106.6 87.3 107.4 84.2 107.5 C81.1 107.7 78.5 107.7 75.5 106.5 C72.6 105.3 68.6 102.9 66.4 100.4 C64.2 97.9 63.2 94.4 62.1 91.3 C60.9 88.2 59.4 85.1 59.2 81.9 C59.0 78.7 59.3 75.0 60.8 72.0 C62.3 69.1 65.9 66.6 68.1 64.4 C70.2 62.2 71.0 60.1 73.7 58.8 C76.5 57.4 81.5 56.5 84.5 56.5 C87.6 56.5 89.4 57.3 92.0 58.6 C94.7 59.9 98.0 62.2 100.2 64.3 C102.5 66.5 104.3 68.9 105.7 71.7 C107.2 74.6 109.0 78.0 109.0 81.5 Z\" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"1.10\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.55\"></path><path d=\"M69.2 76.9 C69.9 76.2 71.9 73.2 73.3 72.9 C74.8 72.6 77.2 74.8 78.0 75.2 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"1.60\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M70.4 76.1 C70.8 75.5 71.7 73.0 72.9 72.8 C74.0 72.6 76.7 74.5 77.5 74.9 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"0.88\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.55\"></path><path d=\"M90.6 75.5 C91.2 74.7 92.5 70.3 93.7 70.2 C95.0 70.2 97.3 74.4 98.1 75.2 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"1.60\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M90.5 75.0 C91.1 74.4 93.0 71.7 94.2 71.5 C95.3 71.4 96.7 73.8 97.3 74.2 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"0.88\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.55\"></path><path d=\"M72.0 88.6 C74.1 91.0 80.6 103.0 84.7 102.8 C88.9 102.7 94.8 90.1 96.9 87.5 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"1.80\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M71.1 87.7 C73.0 90.2 78.4 102.9 83.0 102.8 C87.5 102.8 95.7 90.0 98.2 87.4 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"0.99\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.55\"></path><path d=\"M72.4 87.8 Q84.9 86.8 97.5 86.3 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"1.40\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M71.8 88.6 Q84.0 86.7 96.5 86.5 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"0.77\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.55\"></path><path d=\"M60.8 61.6 C62.5 59.9 67.0 52.9 71.0 51.6 C75.0 50.2 79.8 53.0 84.8 53.3 C89.8 53.5 96.9 51.3 101.0 53.1 C105.0 55.0 107.6 62.6 108.9 64.5 \" fill=\"none\" style=\"stroke:var(--accent)\" stroke-width=\"1.60\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M61.0 63.0 C62.6 61.1 67.1 52.8 71.1 51.5 C75.1 50.1 80.1 54.7 84.8 54.7 C89.6 54.6 95.6 49.7 99.6 51.2 C103.6 52.7 107.4 61.8 109.0 63.9 \" fill=\"none\" style=\"stroke:var(--accent)\" stroke-width=\"0.88\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.55\"></path><path d=\"M56.0 154.4 Q89.9 150.6 123.5 145.6 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"1.20\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M56.0 152.8 Q90.0 149.2 124.1 147.3 \" fill=\"none\" stroke=\"#1B1714\" stroke-width=\"0.66\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.55\"></path></svg>"], "choices": [["Return the book?", 6], ["Take it home?", 7]]}, "5": {"title": "Your Name", "body": [["p", "You open the book. The first page contains your name, written exactly as it appears on the cover. The second is a list of names people have called you. Some affectionate. Some unkind. Some you haven’t heard in years. You turn several pages, finding names you’d nearly forgotten. Then you reach a page with just one word. A name nobody has ever called you. At least, not yet. Underneath it is a date. Tomorrow. You close the book and look down the street. Someone is walking toward you. You don’t recognize them. Not yet."]], "art": [], "choices": [["Return the book?", 6], ["Take it home?", 7]]}, "6": {"title": "The Return", "body": [["p", "You slide the book back onto the shelf. Something about keeping it doesn’t feel right. As you close the little door, you notice a small inscription carved into the wood."], ["i", "Take what you need. Leave what you can."], ["p", "Beneath it is a tiny shelf you hadn’t noticed before. On it rests a notebook. Blank."], ["p", "You take out your pen and write down something you remember. Something small. Something that happened once and mattered. Then you leave the notebook for the next person."], ["p", "When you return the following day, the little library is gone. But the bench beside it is still there. And someone has left a flower."]], "art": [], "ending": "The Return"}, "7": {"title": "The Book You Keep", "body": [["p", "You take the book home. For several evenings, you read it carefully. The words never change. But you do. Something you overlooked becomes important. Something you feared becomes ordinary. Something you thought you’d forgotten comes back in the middle of doing the dishes. Eventually, you reach the final page. It’s blank. You flip back through the book. Every other page is blank now, too. You stare at it for a long time. Then you find a pencil. You’ve always wanted to write a book. Perhaps this is how you start."]], "art": [], "ending": "The Book You Keep"}};
+const CFG = {"key": "turn-to-page-little-library", "title": "The Little Library at the End of the Road", "tag": "Some books are waiting for a particular reader.", "icon": "📚", "allDone": "Every book read. The library has started a shelf just for you.", "forget": "Endings forgotten. The books are back on the shelf."};
+const ENDS = Object.keys(PAGES).filter((k) => PAGES[k].ending);
+const NE = ENDS.length;
+const $ = (id) => document.getElementById(id);
+const pageEl = $("page");
+let found = new Set(), trail = [];
+try { found = new Set(JSON.parse(localStorage.getItem(CFG.key) || "[]")); } catch (e) {}
+const save = () => { try { localStorage.setItem(CFG.key, JSON.stringify([...found])); } catch (e) {} };
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function cups() {
+  $("cups").innerHTML = ENDS.map((e) => `<span class="cup ${found.has(e) ? "on" : ""}"></span>`).join("");
+  $("foundTxt").textContent = `Endings ${found.size}/${NE}`;
+}
+function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 2600); }
+
+function folio(n) {
+  const back = trail.length ? `<button data-back>← back a page</button>` : `<span></span>`;
+  return n % 2 === 0
+    ? `<div class="folio"><b>${n}</b>${back.replace("<span></span>", "")}<span>TURN TO PAGE…</span></div>`
+    : `<div class="folio"><span>TURN TO PAGE…</span>${back.replace("<span></span>", "")}<b>${n}</b></div>`;
+}
+
+function renderCover() {
+  pageEl.className = "page cover";
+  pageEl.innerHTML = `
+    <p class="kicker">A Turn to Page… adventure</p>
+    <h1>${esc(CFG.title)}</h1>
+    ${CFG.tag ? `<p class="tagline">${esc(CFG.tag)}</p>` : ""}
+    <div class="art one" style="margin:auto 0;padding:16px 0">${$("coverArt").innerHTML}</div>
+    <div class="btns"><button class="btn" data-go="2">Turn to page 2 to begin →</button>
+      ${found.size ? `<button class="btn ghost" data-go="endings">Endings found (${found.size}/${NE})</button>` : ""}</div>
+    <p class="hint">Make a choice, then turn to the page it tells you. No save points required.</p>
+    <div class="press"><b>The Black Root Press</b><br>Portland, Oregon</div>`;
+}
+
+function renderPage(n) {
+  const p = PAGES[n];
+  const body = p.body.map(([k, t]) => `<p class="${k === "p" ? "" : k}">${esc(t)}</p>`).join("");
+  let tail;
+  if (p.choices) {
+    tail = `<div class="choices">${p.choices.map(([t, to], i) =>
+      `<button class="choice" data-go="${to}"><span><kbd>${i + 1}</kbd>${esc(t)}</span><span class="go">turn to ${to} →</span></button>`).join("")}</div>`;
+  } else {
+    const fresh = !found.has(n);
+    if (fresh) { found.add(n); save(); cups(); }
+    const left = NE - found.size;
+    tail = `<div class="end"><p class="big">THE END.</p>
+      <p class="unlock">${fresh ? "New ending unlocked: " : "Ending: "}<b>${esc(p.ending)}</b> · ${left ? `${left} still out there` : "you’ve found them all"}</p>
+      <div class="btns"><button class="btn" data-go="2" data-reset>Want to try another path? Return to page 2 →</button>
+      <button class="btn ghost" data-go="endings">All endings</button></div></div>`;
+    if (fresh) setTimeout(() => toast(left ? `${CFG.icon} Ending found (${found.size}/${NE})` : `${CFG.icon} All ${NE} endings found!`), 450);
+  }
+  pageEl.className = "page";
+  pageEl.innerHTML = `<p class="kicker">${esc(CFG.title)}</p><h1>${esc(p.title)}</h1>
+    <div class="story">${body}</div>
+    <div class="art ${p.art.length > 1 ? "two" : "one"}">${p.art.join("")}</div>${tail}${folio(+n)}`;
+}
+
+function renderEndings() {
+  const items = ENDS.map((e) => {
+    const p = PAGES[e], on = found.has(e);
+    return `<li class="${on ? "" : "locked"}"><span class="num">p. ${e}</span><span class="t">${on ? esc(p.title) : "??? ???"}<small>${on ? esc(p.ending) : "Not found yet"}</small></span>
+      ${on ? `<button data-go="${e}">reread →</button>` : ""}</li>`;
+  }).join("");
+  pageEl.className = "page";
+  pageEl.innerHTML = `<p class="kicker">${esc(CFG.title)}</p><h1>Endings Found: ${found.size} of ${NE}</h1>
+    <p style="margin:0 0 6px;font-size:15px;line-height:1.6">${found.size === NE ? esc(CFG.allDone) : "Some paths are still out there. Every choice starts on page 2."}</p>
+    <ul class="list">${items}</ul>
+    <div class="art one" style="margin:26px 0 18px"><div style="width:min(240px,70%)">${$("bookArt").innerHTML}</div></div>
+    <div class="btns"><button class="btn" data-go="2" data-reset>Start again on page 2 →</button>
+      ${found.size ? `<button class="btn ghost" data-clear>Forget my endings</button>` : ""}</div>
+    <div class="colophon" style="margin-top:22px"><b>${esc(CFG.title.toUpperCase())}</b><br>Written by Luke Allis<br>The Black Root Press · Portland, Oregon · November 2026<br>theblackrootpress.com</div>`;
+}
+
+function show(view, push = true) {
+  if (push) { const cur = location.hash.slice(1) || "cover"; if (cur !== view) history.pushState(null, "", view === "cover" ? location.pathname : "#" + view); }
+  const n = view.startsWith("page-") ? view.slice(5) : null;
+  if (n && PAGES[n]) renderPage(n); else if (view === "endings") renderEndings(); else renderCover();
+  pageEl.classList.remove("turn"); void pageEl.offsetWidth; pageEl.classList.add("turn");
+  requestAnimationFrame(() => setTimeout(() => pageEl.querySelectorAll(".art").forEach((a) => a.classList.add("in")), 30));
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  const first = pageEl.querySelector(".choice, .btn"); if (first && push) first.focus({ preventScroll: true });
+}
+function go(target, reset) {
+  const cur = location.hash.slice(1) || "cover";
+  if (reset) trail = []; else if (cur.startsWith("page-")) trail.push(cur);
+  show(target === "endings" ? "endings" : target === "cover" ? "cover" : "page-" + target);
+}
+
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.go) go(b.dataset.go, "reset" in b.dataset);
+  else if ("back" in b.dataset) { const prev = trail.pop(); if (prev) show(prev); }
+  else if ("clear" in b.dataset) { found.clear(); save(); cups(); renderEndings(); toast(CFG.forget); }
+});
+$("home").onclick = () => { trail = []; show("cover"); };
+$("found").onclick = () => show("endings");
+document.addEventListener("keydown", (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const ch = [...pageEl.querySelectorAll(".choice")];
+  if (/^[12]$/.test(e.key) && ch[+e.key - 1]) ch[+e.key - 1].click();
+});
+window.addEventListener("hashchange", () => show(location.hash.slice(1) || "cover", false));
+window.addEventListener("popstate", () => show(location.hash.slice(1) || "cover", false));
+cups();
+show(location.hash.slice(1) || "cover", false);
+</script>
+</body>
+</html>
