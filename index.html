@@ -4,25 +4,48 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Turn to Page… · The Black Root Press</title>
-<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+<meta name="description" content="Tiny choose-your-own adventures from The Black Root Press, free to read.">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-:root{--paper:#F3EBDF;--sand:#E6DCCB;--ink:#1B1714;--accent:#6B4F3A;--muted:#8A7F72;--desk:#D9CCB8}
+:root{--paper:#F3EBDF;--cream:#FBF7F0;--sand:#E6DCCB;--ink:#1B1714;--accent:#6B4F3A;--muted:#8A7F72;--desk:#D9CCB8;
+  --mono:"Courier Prime",Courier,"Courier New",monospace;--serif:"Libre Baskerville",Georgia,serif}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:var(--desk);color:var(--ink);font-family:"Libre Baskerville",Georgia,serif;
-  display:flex;justify-content:center;padding:28px 14px;background-image:radial-gradient(rgba(27,23,20,.05) 1px,transparent 1px);background-size:6px 6px}
-main{width:100%;max-width:560px;background:var(--paper);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:36px 40px 28px;align-self:flex-start}
-.kicker{margin:0;font-family:"Courier Prime",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-h1{margin:14px 0 8px;font-family:"Courier Prime",monospace;font-weight:400;font-size:clamp(32px,8vw,44px);text-transform:uppercase;line-height:1.05}
+body{margin:0;min-height:100vh;background:var(--desk);color:var(--ink);font-family:var(--serif);
+  display:flex;justify-content:center;padding:28px 14px 48px;background-image:radial-gradient(rgba(27,23,20,.05) 1px,transparent 1px);background-size:6px 6px}
+main{width:100%;max-width:600px;background:var(--paper);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:38px 42px 30px;align-self:flex-start}
+.kicker{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{margin:14px 0 8px;font-family:var(--mono);font-weight:400;font-size:clamp(32px,8vw,46px);text-transform:uppercase;line-height:1.05}
 h1 span{color:var(--accent)}
-.tag{margin:0 0 26px;font-style:italic;font-size:16px;line-height:1.5}
-ul{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
-li a{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 4px;border-bottom:1px dashed var(--muted);color:var(--ink);text-decoration:none}
-li a:hover{background:var(--sand)}
-li b{display:block;font-family:"Courier Prime",monospace;text-transform:uppercase;font-size:17px}
-li small{font-style:italic;font-size:14px}
-.go{flex:none;font-family:"Courier Prime",monospace;font-weight:700;color:var(--accent)}
-footer{margin-top:28px;padding-top:12px;border-top:3px dashed var(--accent);font-family:"Courier Prime",monospace;font-size:12px;line-height:1.6}
+.tag{margin:0 0 24px;font-style:italic;font-size:16px;line-height:1.5}
+p{font-size:15.5px;line-height:1.7;margin:0 0 14px}
+.welcome{margin:0 0 28px}
+.welcome .hello{font-family:var(--mono);font-weight:700;font-size:17px;margin-bottom:10px}
+h2{margin:0 0 14px;font-family:var(--mono);font-weight:700;font-size:20px;line-height:1.2;text-transform:uppercase;letter-spacing:.02em}
+ul.stories{list-style:none;margin:0 0 34px;padding:0;border-top:2px solid var(--ink)}
+.stories a{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 6px;border-bottom:1px dashed var(--muted);color:var(--ink);text-decoration:none;transition:background .15s}
+.stories a:hover,.stories a:focus-visible{background:var(--sand);outline:none}
+.stories b{display:block;font-family:var(--mono);text-transform:uppercase;font-size:17px;margin-bottom:3px}
+.stories small{display:block;font-style:italic;font-size:14px;line-height:1.5}
+.go{flex:none;font-family:var(--mono);font-weight:700;color:var(--accent);transition:transform .15s}
+.stories a:hover .go{transform:translateX(4px)}
+.support{border-top:3px dashed var(--accent);padding-top:24px}
+.sponsor{margin:22px 0 18px;padding:18px 20px 6px;background:var(--cream);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.sponsor h2{font-size:17px;margin-bottom:10px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 6px}
+.btn{display:inline-block;border:2px solid var(--ink);background:var(--sand);color:var(--ink);text-decoration:none;padding:11px 16px;
+  font-family:var(--mono);font-weight:700;font-size:14.5px;box-shadow:3px 3px 0 var(--ink);transition:transform .1s,box-shadow .1s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.alt{background:var(--paper)}
+.qr{display:flex;gap:16px;align-items:center;margin:18px 0 22px;padding:14px;border:1px dashed var(--muted);background:var(--cream)}
+.qr img{width:150px;height:150px;flex:none;background:#fff;border:1px solid var(--ink)}
+.qr p{margin:0;font-size:14px;line-height:1.55}
+.signoff{margin-top:22px}
+.signoff p{margin:0 0 6px}
+footer{margin-top:18px;padding-top:12px;border-top:3px dashed var(--accent);font-family:var(--mono);font-size:12.5px;line-height:1.7}
 footer b{font-size:14px}
+footer a{color:var(--ink)}
+@media (max-width:480px){main{padding:28px 22px 24px;box-shadow:4px 4px 0 var(--ink)}p{font-size:15px}.qr{flex-direction:column;text-align:center}.btn{width:100%;text-align:center}}
 </style>
 </head>
 <body>
@@ -30,13 +53,52 @@ footer b{font-size:14px}
   <p class="kicker">Choose your own adventure</p>
   <h1>Turn to Page<span>…</span></h1>
   <p class="tag">Tiny adventures in making questionable decisions.</p>
-  <ul>
-    <li><a href="last-zine/"><span><b>The Last Zine on the Table</b><small>A free zine with no vendor and a sign that says: if you mean it.</small></span><span class="go">begin →</span></a></li>
-    <li><a href="little-library/"><span><b>The Little Library at the End of the Road</b><small>Some books are waiting for a particular reader.</small></span><span class="go">begin →</span></a></li>
-    <li><a href="the-gift/"><span><b>The Gift That Wasn’t Yours</b><small>A peculiar little winter story, delivered to the wrong door.</small></span><span class="go">begin →</span></a></li>
-    <li><a href="immortal-latte/"><span><b>The Immortal Latte</b><small>A three-dollar spellbook. One latte. Three endings.</small></span><span class="go">begin →</span></a></li>
+
+  <section class="welcome">
+    <p class="hello">Welcome, wanderer.</p>
+    <p>Sometimes you just need a little story to get lost in. Here you’ll find tiny adventures about strange encounters, unexpected discoveries, questionable choices, and the occasional supernatural cup of coffee.</p>
+    <p>Pick a story, follow your instincts, and see where the pages take you. There are no wrong turns. Well, there might be a few.</p>
+    <p>These adventures are free to read, and we’ll keep adding more as this little collection grows. We’re glad you found your way here.</p>
+  </section>
+
+  <ul class="stories">
+    <li><a href="last-zine/"><span><b>The Last Zine on the Table</b><small>A free zine, an empty vendor table, and a handwritten sign that says if you mean it. What happens next is up to you.</small></span><span class="go">begin →</span></a></li>
+    <li><a href="little-library/"><span><b>The Little Library at the End of the Road</b><small>Some books are waiting for a particular reader. This one might have been waiting for you.</small></span><span class="go">begin →</span></a></li>
+    <li><a href="the-gift/"><span><b>The Gift That Wasn’t Yours</b><small>A peculiar little winter story about an unexpected delivery and what happens when curiosity gets the better of you.</small></span><span class="go">begin →</span></a></li>
+    <li><a href="immortal-latte/"><span><b>The Immortal Latte</b><small>A three-dollar spellbook. One latte. Three endings. What could possibly go wrong?</small></span><span class="go">begin →</span></a></li>
   </ul>
-  <footer><b>The Black Root Press</b><br>Portland, Oregon · theblackrootpress.com</footer>
+
+  <section class="support" id="support">
+    <h2>Help us keep the stories growing</h2>
+    <p><em>Turn to Page…</em> is a little project from The Black Root Press, an independent, Portland-based arts press dedicated to publishing and celebrating trans and nonbinary creators.</p>
+    <p>We believe stories should be accessible, creative work deserves to be valued, and the people making that work deserve to be paid.</p>
+    <p>We’re a small press, and we’re building something we hope will grow with every issue, every contributor, and every person who picks up one of our publications.</p>
+    <p>Right now, we pay contributors $10 per issue in which their work appears. It’s a modest beginning, but it’s important to us that paying artists is part of what we do from the start.</p>
+    <p>Every purchase and donation helps us continue that commitment. Proceeds go back into contributor payments and the paper, ink, binding materials, and other supplies that make our publications possible.</p>
+
+    <div class="sponsor">
+      <h2>Want to sponsor a contributor?</h2>
+      <p>A donation of $10 covers the equivalent of one contributor payment at our current rate.</p>
+      <p>Whether you contribute $1, $5, $10, or more, you’re helping us publish new voices, make more zines, and keep creative work finding its way into people’s hands.</p>
+      <p>There’s absolutely no obligation to donate. These stories are here for you to enjoy, and we’re happy you’re reading them.</p>
+    </div>
+
+    <div class="btns">
+      <a class="btn" href="https://www.paypal.com/donate/?hosted_button_id=F3TX23AYLKTEE" target="_blank" rel="noopener">Sponsor a Contributor · $10</a>
+      <a class="btn alt" href="https://www.paypal.com/donate/?hosted_button_id=F3TX23AYLKTEE" target="_blank" rel="noopener">Make a Donation · Any Amount</a>
+    </div>
+    <div class="qr" id="give">
+      <img src="paypal-qr.png" alt="PayPal QR code for donations to The Black Root Press">
+      <p><strong>Prefer your phone?</strong> Scan this code with your camera to give through PayPal. To sponsor a contributor, enter $10 on the PayPal page, or give any amount you like.</p>
+    </div>
+
+    <div class="signoff">
+      <p>Thank you for reading, sharing, and helping this little press put more art into the world.</p>
+      <p><em>With gratitude,</em></p>
+    </div>
+  </section>
+
+  <footer><b>The Black Root Press</b><br>Portland, Oregon<br><a href="https://theblackrootpress.com">theblackrootpress.com</a></footer>
 </main>
 </body>
 </html>
