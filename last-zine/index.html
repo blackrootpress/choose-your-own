@@ -57,6 +57,7 @@ h1{margin:6px 0 16px;font-family:var(--mono);font-weight:400;font-size:26px;line
 .btn{border:2px solid var(--ink);background:var(--sand);padding:10px 14px;font-family:var(--mono);font-weight:700;font-size:14px;box-shadow:3px 3px 0 var(--ink);transition:transform .1s,box-shadow .1s}
 .btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
 .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+a.btn{display:inline-block;color:var(--ink);text-decoration:none}
 .btn.ghost{background:var(--cream)}
 .folio{margin-top:18px;padding-top:6px;border-top:2px dashed var(--accent);display:flex;justify-content:space-between;align-items:center;
   font-family:var(--mono);font-size:12px;letter-spacing:.06em}
@@ -128,6 +129,7 @@ function renderCover() {
     <div class="btns"><button class="btn" data-go="2">Begin the story →</button>
       ${found.size ? `<button class="btn ghost" data-go="endings">Endings found (${found.size}/${NE})</button>` : ""}</div>
     <p class="hint">Make a choice and see where it takes you. No save points required.</p>
+    <p class="hint" style="font-style:normal;margin-top:8px"><a href="../" style="color:var(--accent);font-family:var(--mono);font-weight:700;font-size:13px">← More adventures</a></p>
     <div class="press"><b>The Black Root Press</b><br>Portland, Oregon</div>`;
 }
 
@@ -145,7 +147,8 @@ function renderPage(n) {
     tail = `<div class="end"><p class="big">THE END.</p>
       <p class="unlock">${fresh ? "New ending unlocked: " : "Ending: "}<b>${esc(p.ending)}</b> · ${left ? `${left} still out there` : "you’ve found them all"}</p>
       <div class="btns"><button class="btn" data-go="2" data-reset>Want to try another path? Start again →</button>
-      <button class="btn ghost" data-go="endings">All endings</button></div></div>`;
+      <button class="btn ghost" data-go="endings">All endings</button>
+      <a class="btn" href="../">Go on another adventure →</a></div></div>`;
     if (fresh) setTimeout(() => toast(left ? `${CFG.icon} Ending found (${found.size}/${NE})` : `${CFG.icon} All ${NE} endings found!`), 450);
   }
   pageEl.className = "page";
@@ -166,6 +169,7 @@ function renderEndings() {
     <ul class="list">${items}</ul>
     <div class="art one" style="margin:26px 0 18px"><div style="width:min(240px,70%)">${$("bookArt").innerHTML}</div></div>
     <div class="btns"><button class="btn" data-go="2" data-reset>Start again from the beginning →</button>
+      <a class="btn ghost" href="../">Go on another adventure →</a>
       ${found.size ? `<button class="btn ghost" data-clear>Forget my endings</button>` : ""}</div>
     <div class="colophon" style="margin-top:22px"><b>${esc(CFG.title.toUpperCase())}</b><br>Written by Luke Allis<br>The Black Root Press · Portland, Oregon · November 2026<br>theblackrootpress.com</div>`;
 }
