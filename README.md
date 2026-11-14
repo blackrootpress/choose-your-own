@@ -22,6 +22,6 @@ Open `index.html` in a browser. To put it online, turn on GitHub Pages (Settings
 - Tap a choice to turn to its page. On a keyboard, press **1** or **2**.
 - The boxes in the top corner track which endings you've found. They're saved in your own browser only, separately for each story.
 - Each page has its own link, such as `#page-3`, plus `#endings`.
-- The first three stories come from the *Turn to Page…* zine; their pages are renumbered so every story starts on page 2.
+- Unlike the printed zines, the web versions show no page numbers: choices simply take you to the next part of the story.
 
 Written by Luke Allis · The Black Root Press · theblackrootpress.com

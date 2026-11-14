@@ -71,7 +71,7 @@ h1{margin:6px 0 16px;font-family:var(--mono);font-weight:400;font-size:26px;line
 /* endings */
 .list{margin:6px 0 0;padding:0;list-style:none}
 .list li{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px dashed var(--muted)}
-.list .num{font-family:var(--mono);font-weight:700;color:var(--accent);width:56px;flex:none}
+.list .num{font-family:var(--mono);font-weight:700;color:var(--accent);width:28px;flex:none}
 .list .t{flex:1}
 .list .t small{display:block;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
 .list li.locked .t{color:var(--muted)}
@@ -109,11 +109,9 @@ function cups() {
 }
 function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 2600); }
 
-function folio(n) {
-  const back = trail.length ? `<button data-back>← back a page</button>` : `<span></span>`;
-  return n % 2 === 0
-    ? `<div class="folio"><b>${n}</b>${back.replace("<span></span>", "")}<span>TURN TO PAGE…</span></div>`
-    : `<div class="folio"><span>TURN TO PAGE…</span>${back.replace("<span></span>", "")}<b>${n}</b></div>`;
+function folio() {
+  const back = trail.length ? `<button data-back>← go back</button>` : `<span></span>`;
+  return `<div class="folio"><span>TURN TO PAGE…</span>${back}</div>`;
 }
 
 function renderCover() {
@@ -122,9 +120,9 @@ function renderCover() {
     <p class="kicker">A Turn to Page… adventure</p>
     <h1>The Immortal Latte: A Mini Adventure</h1>
     <div class="art one" style="margin:auto 0;padding:16px 0">${$("coverArt").innerHTML}</div>
-    <div class="btns"><button class="btn" data-go="2">Turn to page 2 to begin →</button>
+    <div class="btns"><button class="btn" data-go="2">Begin the story →</button>
       ${found.size ? `<button class="btn ghost" data-go="endings">Endings found (${found.size}/3)</button>` : ""}</div>
-    <p class="hint">Make a choice, then turn to the page it tells you. No save points required.</p>
+    <p class="hint">Make a choice and see where it takes you. No save points required.</p>
     <div class="press"><b>The Black Root Press</b><br>Portland, Oregon</div>`;
 }
 
@@ -134,35 +132,35 @@ function renderPage(n) {
   let tail;
   if (p.choices) {
     tail = `<div class="choices">${p.choices.map(([t, to], i) =>
-      `<button class="choice" data-go="${to}"><span><kbd>${i + 1}</kbd>${esc(t)}</span><span class="go">turn to ${to} →</span></button>`).join("")}</div>`;
+      `<button class="choice" data-go="${to}"><span><kbd>${i + 1}</kbd>${esc(t)}</span><span class="go">choose →</span></button>`).join("")}</div>`;
   } else {
     const fresh = !found.has(n);
     if (fresh) { found.add(n); save(); cups(); }
     const left = 3 - found.size;
     tail = `<div class="end"><p class="big">THE END.</p>
       <p class="unlock">${fresh ? "New ending unlocked: " : "Ending: "}<b>${esc(p.ending)}</b> · ${left ? `${left} still out there` : "you’ve found them all"}</p>
-      <div class="btns"><button class="btn" data-go="2" data-reset>Want to try another path? Return to page 2 →</button>
+      <div class="btns"><button class="btn" data-go="2" data-reset>Want to try another path? Start again →</button>
       <button class="btn ghost" data-go="endings">All endings</button></div></div>`;
     if (fresh) setTimeout(() => toast(left ? `☕ Ending found (${found.size}/3)` : "☕ All three endings found!"), 450);
   }
   pageEl.className = "page";
   pageEl.innerHTML = `<p class="kicker">The Immortal Latte: A Mini Adventure</p><h1>${esc(p.title)}</h1>
     <div class="story">${body}</div>
-    <div class="art ${p.art.length > 1 ? "two" : "one"}">${p.art.join("")}</div>${tail}${folio(+n)}`;
+    <div class="art ${p.art.length > 1 ? "two" : "one"}">${p.art.join("")}</div>${tail}${folio()}`;
 }
 
 function renderEndings() {
   const items = ENDS.map((e) => {
     const p = PAGES[e], on = found.has(e);
-    return `<li class="${on ? "" : "locked"}"><span class="num">p. ${e}</span><span class="t">${on ? esc(p.title) : "??? ???"}<small>${on ? esc(p.ending) : "Not found yet"}</small></span>
+    return `<li class="${on ? "" : "locked"}"><span class="num">${ENDS.indexOf(e) + 1}</span><span class="t">${on ? esc(p.title) : "??? ???"}<small>${on ? esc(p.ending) : "Not found yet"}</small></span>
       ${on ? `<button data-go="${e}">reread →</button>` : ""}</li>`;
   }).join("");
   pageEl.className = "page";
   pageEl.innerHTML = `<p class="kicker">The Immortal Latte: A Mini Adventure</p><h1>Endings Found: ${found.size} of 3</h1>
-    <p style="margin:0 0 6px;font-size:15px;line-height:1.6">${found.size === 3 ? "Every path walked. The latte is proud of you, in its way." : "Some paths are still out there. Every choice starts on page 2."}</p>
+    <p style="margin:0 0 6px;font-size:15px;line-height:1.6">${found.size === 3 ? "Every path walked. The latte is proud of you, in its way." : "Some paths are still out there. Every path starts at the beginning."}</p>
     <ul class="list">${items}</ul>
     <div class="art one" style="margin:26px 0 18px"><div style="width:min(240px,70%)">${$("bookArt").innerHTML}</div></div>
-    <div class="btns"><button class="btn" data-go="2" data-reset>Start again on page 2 →</button>
+    <div class="btns"><button class="btn" data-go="2" data-reset>Start again from the beginning →</button>
       ${found.size ? `<button class="btn ghost" data-clear>Forget my endings</button>` : ""}</div>
     <div class="colophon" style="margin-top:22px"><b>THE IMMORTAL LATTE: A MINI ADVENTURE</b><br>Written by Luke Allis<br>The Black Root Press · Portland, Oregon · November 2026<br>theblackrootpress.com</div>`;
 }
